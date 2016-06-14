@@ -1,0 +1,21 @@
+(clear)
+(defmodule TEST)
+(deftemplate TEST::SEL-ARCH (multislot sequence))
+(defrule TEST::enumerate-all-subsets
+    "This rule enumerates all possible subsets in a set of 6 elements"
+    ?arch <- (TEST::SEL-ARCH (sequence $?seq))
+	(test (< (length$ $?seq) 6))
+    =>
+    (retract ?arch)  
+    (bind ?n (length$ $?seq))
+    (bind ?new-seq (insert$ ?seq (+ ?n 1) 0))
+    (assert (TEST::SEL-ARCH  (sequence ?new-seq)))
+    (bind ?new-seq (insert$ ?seq (+ ?n 1) 1))
+    (assert (TEST::SEL-ARCH  (sequence ?new-seq)))    
+    )
+(reset)
+(assert (TEST::SEL-ARCH (sequence (create$ ))))
+(focus TEST)
+(unwatch all)
+(run 10)
+(facts)
