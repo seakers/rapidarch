@@ -45,4 +45,20 @@ def repair_bits(bits):
             bits[2]=1
     return bits
 
+def partition_feasible(part):
+    part=np.array(part)
+    if pars[0]!=1:
+        feas=false
+        return feas
+    maxs=1
+    for i in range(1,part.size):
+        elem=part[i]
+        if elem>=0 | elem>(1+maxs):
+            feas=false
+            return feas
+        else:
+            maxs=max(maxs,elem)
+
+    feas=true
+    return feas
 
